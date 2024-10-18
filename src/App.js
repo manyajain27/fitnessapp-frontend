@@ -1,24 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Homepage from './components/homepage/Homepage';
+import NameInput from './components/userdata/NameInput';
+import Animation from './components/homepage/Animation';
+import FitnessGoals from './components/userdata/FitnessGoals';
+import MainForm from './components/userdata/MainForm';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Animation/>
+      <MainForm/>
+    </>
   );
 }
 
