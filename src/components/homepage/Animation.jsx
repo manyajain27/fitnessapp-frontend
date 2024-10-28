@@ -4,12 +4,12 @@ import { loadSlim } from "tsparticles-slim"; // slim version of tsparticles
 
 function Animation() {
     const particlesInit = useCallback(async engine => {
-        console.log(engine);
+        // console.log(engine);
         await loadSlim(engine);
     }, []);
 
     const particlesLoaded = useCallback(async container => {
-        console.log(container);
+        // console.log(container);
     }, []);
 
     return (
@@ -22,7 +22,7 @@ function Animation() {
                 options={{
                     background: {
                         color: {
-                            value: "#000000", // Black background
+                            value: "#864fc4", 
                         },
                     },
                     fpsLimit: 120,

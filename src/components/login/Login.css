@@ -1,0 +1,53 @@
+*{
+    z-index:1;
+}
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+
+label{
+    color:white;
+}
+
+span{
+  font-size:30px;
+}
+
+@media only screen and (max-width: 768px){
+  body{
+   
+    padding-bottom:50px;
+}
+
+  .divider{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+  }
+  .main-title{
+    font-size:50px;
+  }
+  li{
+   display:none;
+  }
+  .main-container{
+    margin-top:0;
+  }
+  .container{
+    margin-top:10px;
+    margin-bottom:30px;
+  }
+  .signup,.forgot-pass,label{
+    color:white;
+  }
+  
+}
+
+

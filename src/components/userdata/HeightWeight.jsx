@@ -20,8 +20,8 @@ function HeightWeight({ step, setStep }) {
         {/* <Animation/> */}
         <div className="d-flex justify-content-center align-items-center vh-100">
           <form
-            className="p-5 d-flex flex-col rounded bg-white"
-            style={{ boxShadow: '0 0 30px gray', minWidth: '510px', minHeight: '500px', zIndex: '1' }}
+            className="p-5 d-flex flex-col rounded"
+            style={{ boxShadow: '0 0 30px gray', minWidth: '510px', minHeight: '500px', zIndex: '1' ,background:"rgba(255,255,255,0.8)"}}
           >
             <div className="form-group mb-3">
               <h6 className="mb-3">How tall are you?</h6>

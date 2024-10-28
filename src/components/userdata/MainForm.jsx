@@ -6,6 +6,7 @@ import HealthCondtions from './HealthCondtions';
 import GenderAge from './GenderAge';
 import HeightWeight from './HeightWeight';
 import DietType from './DietType';
+import Animation from '../homepage/Animation';
 
 function MainForm() {
 
@@ -50,9 +51,12 @@ const showStep=()=>{
 }
 
   return (
-    <div>
-      {showStep()}
-    </div>
+    <>
+        <Animation/>
+        <div>
+        {showStep()}
+        </div>
+    </>
   )
 }
 

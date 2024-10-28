@@ -6,18 +6,18 @@ function GenderAge({step,setStep}) {
       <>
           {/* <Animation/> */}
           <div className="d-flex justify-content-center align-items-center vh-100">
-          <form className="p-5 d-flex flex-col rounded bg-white"  style={{boxShadow:"0 0 30px gray", maxWidth:"480px",minHeight:"500px",zIndex:"1"}}>
+          <form className="p-5 d-flex flex-col rounded"  style={{boxShadow:"0 0 30px gray", maxWidth:"480px",minHeight:"500px",zIndex:"1",background:"rgba(255,255,255,0.8)"}}>
             <div className="form-group mb-3">
               <div className="form-label text-center font-bold">Please enter the following details to help find your BMI.</div>
               <h6 className=''>What's your gender?</h6>
               <div className="d-flex gap-5 mb-4">
                 <div>
                     <input type="radio" id="male" name="gender" value="male"/>
-                    <label htmlFor='male' className='ms-3'>Male</label>
+                    <label htmlFor='male' className='ms-3 text-black'>Male</label>
                 </div>
                 <div>
                     <input type="radio" id="female" name="gender" value="female"/>
-                    <label htmlFor='female' className='ms-3'>Female</label>
+                    <label htmlFor='female' className='ms-3 text-black'>Female</label>
                 </div>
               </div>
               <h6 className=''>What's your birthdate?</h6>
@@ -288,6 +288,7 @@ function GenderAge({step,setStep}) {
             <option value="WF" label="Wallis and Futuna">Wallis and Futuna</option>
         </optgroup>
     </select>
+    <p className='mt-3' style={{}}>continued...</p>
               
               
               
