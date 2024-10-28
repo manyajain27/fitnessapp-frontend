@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../auth/AuthContext';
 import API_BASE_URL from '../../api/api';
+import LoadingPage from '../homepage/LoadingPage';
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -13,9 +14,10 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // State to hold error messages
+  const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
-  const { loginUser } = useContext(AuthContext);
+  const { setEmail: setEmailInContext ,storeTempPassword} = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,8 @@ function SignUp() {
     } else {
       setErrorMessage(''); // Clear error message if passwords match
     }
-    
+    setLoading(true);
+
     try {
       const response = await axios.post(`${API_BASE_URL}/register/`, {
         first_name: firstName,
@@ -35,11 +38,12 @@ function SignUp() {
         password,
         confirm_password: password,
       });
-
-      if (response.data.access) {
-        loginUser(email, password);
-        navigate('/dashboard'); // Redirect to homepage after successful registration
-      }
+      console.log(response);
+      if (response.status === 201) {
+        setEmailInContext(email); 
+        storeTempPassword(password);
+        navigate('/verify-account'); // Redirect to verification page   
+    }
     } catch (error) {
       console.error('Registration failed:', error);
       if (error.response && error.response.data) {
@@ -53,13 +57,18 @@ function SignUp() {
       } else {
         setErrorMessage("Registration failed. Please try again.");
       }
+    }finally {
+      setLoading(false); // Stop loading
     }
   };
 
   return (
     <>
       <Animation />
-      <div className='mt-2' style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      
+      {loading ? ( // Conditional rendering for loading
+        <LoadingPage/>
+      ):(<div className='mt-2' style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div>
           <h1 style={{ color: "lightgray", marginTop: "0px" }}>Sign Up</h1>
           <p style={{ color: "lightgray" }}>Create your Account</p>
@@ -138,6 +147,7 @@ function SignUp() {
           Already have an account? <Link to='/login' style={{ color: "lightgray" }}>Sign In</Link>
         </p>
       </div>
+      )}
     </>
   );
 }

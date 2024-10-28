@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 );
 
+const[email, setEmail]=useState('');
+const [tempPassword, setTempPassword] = useState('');
 // AuthContext.jsx
 const loginUser = async (email, password) => {
     try {
@@ -41,7 +43,13 @@ const loginUser = async (email, password) => {
     }
 };
 
+const storeTempPassword = (password) => {
+    setTempPassword(password);
+};
 
+const clearTempPassword = () => {
+    setTempPassword('');
+};
     
     const refreshAuthToken = async () => {
         if (authTokens) {
@@ -75,6 +83,12 @@ const loginUser = async (email, password) => {
     const contextValue = {
         user,
         authTokens,
+        loginUser,
+        email,
+        setEmail,
+        tempPassword,
+        storeTempPassword,
+        clearTempPassword,
         loginUser,
         logoutUser,
         refreshAuthToken  
