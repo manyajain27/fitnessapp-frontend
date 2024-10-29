@@ -1,10 +1,9 @@
 import React from 'react'
 import Animation from '../homepage/Animation'
-function GenderAge({step,setStep}) {
+function GenderAge({step,setStep, gender,setGender, country, setCountry, birthdate, setBirthdate}) {
   return (
     <div>
       <>
-          {/* <Animation/> */}
           <div className="d-flex justify-content-center align-items-center vh-100">
           <form className="p-5 d-flex flex-col rounded"  style={{boxShadow:"0 0 30px gray", maxWidth:"480px",minHeight:"500px",zIndex:"1",background:"rgba(255,255,255,0.8)"}}>
             <div className="form-group mb-3">
@@ -12,18 +11,20 @@ function GenderAge({step,setStep}) {
               <h6 className=''>What's your gender?</h6>
               <div className="d-flex gap-5 mb-4">
                 <div>
-                    <input type="radio" id="male" name="gender" value="male"/>
+                    <input type="radio" id="male" name="gender" value="male" checked={gender === 'male'} onChange={() => setGender('male')}/>
                     <label htmlFor='male' className='ms-3 text-black'>Male</label>
                 </div>
                 <div>
-                    <input type="radio" id="female" name="gender" value="female"/>
+                    <input type="radio" id="female" name="gender" value="female" checked={gender === 'female'} onChange={() => setGender('female')} />
                     <label htmlFor='female' className='ms-3 text-black'>Female</label>
                 </div>
               </div>
               <h6 className=''>What's your birthdate?</h6>
-              <input type='date' id='date' name='date' className='p-1 mb-4' style={{border:"1px solid black",borderRadius:"7px"}} />
+              <input type='date' id='date' name='date' className='p-1 mb-4' style={{border:"1px solid black",borderRadius:"7px"}}
+              value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
               <h6>Which country do you live in?</h6>
-        <select className='w-[120px] p-1' required style={{border:"1px solid black",borderRadius:"7px"}}>
+        <select className='w-[120px] p-1' required style={{border:"1px solid black",borderRadius:"7px"}}
+        value={country} onChange={(e) => setCountry(e.target.value)}>
         <option value="0" label="Country" disabled selected="selected">Country</option>
         <optgroup id="country-optgroup-Africa" label="Africa">
             <option value="DZ" label="Algeria">Algeria</option>

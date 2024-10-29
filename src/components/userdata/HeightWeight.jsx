@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-function HeightWeight({ step, setStep }) {
-  const [isMetric, setIsMetric] = useState(false); // State to toggle between units for height
-  const [isKilograms, setIsKilograms] = useState(true); // State to toggle between units for weight
+function HeightWeight({ step, setStep, isMetric, setIsMetric, isKilograms, setIsKilograms, feet, setFeet, inches, setInch, currentWeight, setCurrentWeight, heightCm, setHeightCm, targetWeight, setTargetWeight }) {
+   // State to toggle between units for weight
 
   // Function to handle unit toggle for height
   const handleHeightUnitToggle = () => {
@@ -34,6 +33,8 @@ function HeightWeight({ step, setStep }) {
                       type="text"
                       name="feet"
                       id="feet"
+                      value={feet}
+                      onChange={(e) => setFeet(e.target.value)}
                       className="h-[50px] p-2 mb-0"
                       placeholder="Height(feet)"
                       style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}
@@ -45,6 +46,8 @@ function HeightWeight({ step, setStep }) {
                       type="text"
                       name="inches"
                       id="inches"
+                      value={inches}
+                      onChange={(e) => setInch(e.target.value)}
                       className="h-[50px] p-2 mb-0"
                       placeholder="Height(inches)"
                       style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}
@@ -58,6 +61,8 @@ function HeightWeight({ step, setStep }) {
                     type="text"
                     name="centimeters"
                     id="centimeters"
+                    value={heightCm}
+                    onChange={(e) => setHeightCm(e.target.value)}
                     className="h-[50px] p-2 mb-0"
                     placeholder="Height(cm)"
                     style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}
@@ -84,6 +89,8 @@ function HeightWeight({ step, setStep }) {
                     type="text"
                     name="currentweight"
                     id="currentweight"
+                    value={currentWeight}
+                    onChange={(e) => setCurrentWeight(e.target.value)}
                     className="h-[50px] p-2 mb-0"
                     placeholder="Current Weight"
                     style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}
@@ -96,6 +103,8 @@ function HeightWeight({ step, setStep }) {
                     type="text"
                     name="currentweight"
                     id="currentweight"
+                    value={currentWeight}
+                    onChange={(e) => setCurrentWeight(e.target.value)}
                     className="h-[50px] p-2 mb-0"
                     placeholder="Current Weight"
                     style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}
@@ -122,6 +131,8 @@ function HeightWeight({ step, setStep }) {
                     type="text"
                     name="targetweight"
                     id="targetweight"
+                    value={targetWeight}
+                    onChange={(e) => setTargetWeight(e.target.value)}
                     className="h-[50px] p-2 mb-0"
                     placeholder="Target Weight"
                     style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}
@@ -134,6 +145,8 @@ function HeightWeight({ step, setStep }) {
                     type="text"
                     name="targetweight"
                     id="targetweight"
+                    value={targetWeight}
+                    onChange={(e) => setTargetWeight(e.target.value)}
                     className="h-[50px] p-2 mb-0"
                     placeholder="Target Weight"
                     style={{ border: '1px solid black', borderRadius: '7px', position: 'relative' }}

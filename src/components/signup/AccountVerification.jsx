@@ -30,9 +30,9 @@ function AccountVerification() {
         /// Automatically log in the user after OTP verification using tempPassword
         const loginResponse = await loginUser(email, tempPassword); // Use temporary password
         if (loginResponse.success) {
-          alert('Login successful');
+          // alert('Login successful');
           clearTempPassword(); // Clear the temporary password
-          navigate('/dashboard'); // Redirect to the dashboard after successful login
+          navigate('/user-data'); // Redirect to the dashboard after successful login
         }
       }
     } catch (error) {
