@@ -140,7 +140,7 @@ function UserProfile() {
   
 
   useEffect(() => {
-    const REFRESH_INTERVAL = 4 * 60 * 1000; // 4 minutes
+    const REFRESH_INTERVAL = 9 * 60 * 1000; // 9 minutes
     const refreshInterval = setInterval(() => {
         if (authTokens) {
             refreshAuthToken();
