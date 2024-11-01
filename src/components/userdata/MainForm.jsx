@@ -51,7 +51,7 @@ const showStep = () => {
       case 6:
         return <DietType step={step} setStep={setStep} selectedDiet={selectedDiet} setSelectedDiet={setSelectedDiet} />;
       case 7:
-        postFormData(); // Post the data to the backend instead of logging it
+        postFormData(); 
         navigate('/dashboard');
       default:
         return null;

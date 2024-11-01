@@ -32,7 +32,7 @@ function AccountVerification() {
         if (loginResponse.success) {
           // alert('Login successful');
           clearTempPassword(); // Clear the temporary password
-          navigate('/user-data'); // Redirect to the dashboard after successful login
+          navigate('/user-data'); // Redirect to the form after successful login
         }
       }
     } catch (error) {
