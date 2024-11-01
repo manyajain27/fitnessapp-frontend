@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../api/api';
 import { useNavigate } from 'react-router-dom';
-
+import {jwtDecode} from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -23,11 +23,18 @@ const loginUser = async (email, password) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/token/`, { email, password });
         console.log("Response data:", response.data);  // Check response data
+
+        
+        const decodedToken = jwtDecode(response.data.access);
+        const userId = decodedToken.id;
+        console.log("Decoded Token:", decodedToken);  // Check decoded token
+        console.log("User ID:", userId);  // Check user ID
+        console.log("Updated User State:", { email, userId });
         setAuthTokens(response.data);
-        setUser({ email });
+        setUser({ email, userId });
 
         localStorage.setItem('authTokens', JSON.stringify(response.data));
-        localStorage.setItem('user', JSON.stringify({ email }));
+        localStorage.setItem('user', JSON.stringify({ email, userId }));
 
         return { success: true };  // Indicate success
     } catch (error) {
@@ -82,6 +89,7 @@ const clearTempPassword = () => {
 
     const contextValue = {
         user,
+        setUser,
         authTokens,
         loginUser,
         email,

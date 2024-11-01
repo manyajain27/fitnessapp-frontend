@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useContext} from 'react'
 import NameInput from './NameInput';
 import FitnessGoals from './FitnessGoals';
 import ActivityLevel from './ActivityLevel';
@@ -7,6 +7,10 @@ import GenderAge from './GenderAge';
 import HeightWeight from './HeightWeight';
 import DietType from './DietType';
 import Animation from '../homepage/Animation';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import API_BASE_URL from '../../api/api';
+import { AuthContext } from '../../auth/AuthContext';
 
 function MainForm() {
 
@@ -26,6 +30,9 @@ const [currentWeight, setCurrentWeight] = useState('');
 const [targetWeight, setTargetWeight] = useState('');
 const [isMetric, setIsMetric] = useState(false); // State to toggle between units for height
 const [isKilograms, setIsKilograms] = useState(true);
+const navigate=useNavigate();
+const {authTokens, user}=useContext(AuthContext);
+
 
 const showStep = () => {
     switch (step) {
@@ -44,19 +51,19 @@ const showStep = () => {
       case 6:
         return <DietType step={step} setStep={setStep} selectedDiet={selectedDiet} setSelectedDiet={setSelectedDiet} />;
       case 7:
-        logFormData();
-        return <div>Thank you! Your information has been submitted.</div>;
+        postFormData(); // Post the data to the backend instead of logging it
+        navigate('/dashboard');
       default:
         return null;
     }
   };
 
   function convertHeightToCm(feet, inch) {
-    return (feet * 30.48) + (inch * 2.54);
+    return ((feet * 30.48) + (inch * 2.54)).toFixed(2);
   }
 
   function convertWeightToKg(weight) {
-    return weight / 2.20462;
+    return (weight / 2.20462).toFixed(2);
   }
 
   function calculateBMI(heightCm, weightKg) {
@@ -74,6 +81,8 @@ const showStep = () => {
     }
     return age;
   }
+
+  
   
   function calculateCalorieIntake() {
     // Calculate calorie intake based on user's goals, activity level, and diet
@@ -88,22 +97,75 @@ const showStep = () => {
   }
 
 
-  const logFormData = () => {
-    console.log({
-      name,
-      selectedGoals,
-      selectedActivity,
-      selectedDiet,
-      selectedConditions,
-      gender,
-      birthdate,
-      country,
-      heightCm: isMetric? heightCm : convertHeightToCm(feet,inch) ,
-      currentWeightKg: isKilograms ? currentWeight : convertWeightToKg(currentWeight),
-      targetWeight: isKilograms ? targetWeight : convertWeightToKg(targetWeight),
-      bmi: calculateBMI(isMetric? heightCm : convertHeightToCm(feet,inch), isKilograms ? currentWeight : convertWeightToKg(currentWeight)),
-      age: calculateAge(birthdate),
-    });
+  const postFormData = async () => {
+    // converting to snake case for models
+    const activityMapping = {
+        "Sedentary": "sedentary",
+        "Lightly Active": "lightly_active",
+        "Moderately Active": "moderately_active",
+        "Very Active": "very_active",
+    };
+    
+    const dietMapping = {
+        "Vegetarian": "vegetarian",
+        "Non-Vegetarian": "non_vegetarian",
+        "Vegan": "vegan",
+        "Jain": "jain",
+    };
+
+    const currentActivitySnake = activityMapping[selectedActivity] || selectedActivity;
+    const selectedDietSnake = dietMapping[selectedDiet] || selectedDiet;
+
+    console.log('Auth Token:', authTokens.access);
+    console.log("Current User from Context:", user);
+    console.log('Stored User in LocalStorage:', localStorage.getItem('user'));
+    console.log('User id:', user.userId);
+    console.log('Form Data:', {
+        name,
+        selectedGoals,
+        selectedActivity: currentActivitySnake,
+        selectedDiet: selectedDietSnake,
+        selectedConditions,
+        gender,
+        birthdate,
+        country,
+        heightCm: parseFloat(isMetric ? heightCm : convertHeightToCm(feet, inch)),
+        currentWeightKg: parseFloat(isKilograms ? currentWeight : convertWeightToKg(currentWeight)),
+        targetWeight: parseFloat(isKilograms ? targetWeight : convertWeightToKg(targetWeight)),
+        bmi: parseFloat(calculateBMI(isMetric ? heightCm : convertHeightToCm(feet, inch), isKilograms ? currentWeight : convertWeightToKg(currentWeight))),
+        age: calculateAge(birthdate),
+        user: user.userId
+    })
+    try {
+      const formData = {
+        name,
+        selectedGoals,
+        selectedActivity:currentActivitySnake,
+        selectedDiet:selectedDietSnake,
+        selectedConditions,
+        gender,
+        birthdate,
+        country,
+        heightCm: parseFloat(isMetric ? heightCm : convertHeightToCm(feet, inch)),
+        currentWeightKg: parseFloat(isKilograms ? currentWeight : convertWeightToKg(currentWeight)),
+        targetWeight: parseFloat(isKilograms ? targetWeight : convertWeightToKg(targetWeight)),
+        bmi: parseFloat(calculateBMI(isMetric ? heightCm : convertHeightToCm(feet, inch), isKilograms ? currentWeight : convertWeightToKg(currentWeight))),
+        age: calculateAge(birthdate),
+        user: user.userId
+      };
+
+      const response = await axios.post(`${API_BASE_URL}/health-data/`, formData, {
+        headers: {
+          Authorization: `Bearer ${authTokens.access}`, // Include the access token
+        },
+      });
+
+      if (response.status === 201) {
+        console.log('Data submitted successfully:', response.data);
+      }
+    } catch (error) {
+      console.error('Error submitting form data:', error.response.data);
+    }
   };
 
   return (

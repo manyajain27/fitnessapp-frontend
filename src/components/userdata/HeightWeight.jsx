@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function HeightWeight({ step, setStep, isMetric, setIsMetric, isKilograms, setIsKilograms, feet, setFeet, inches, setInch, currentWeight, setCurrentWeight, heightCm, setHeightCm, targetWeight, setTargetWeight }) {
+function HeightWeight({ step, setStep, isMetric, setIsMetric, isKilograms, setIsKilograms, feet, setFeet, inch, setInch, currentWeight, setCurrentWeight, heightCm, setHeightCm, targetWeight, setTargetWeight }) {
    // State to toggle between units for weight
 
   // Function to handle unit toggle for height
@@ -46,7 +46,7 @@ function HeightWeight({ step, setStep, isMetric, setIsMetric, isKilograms, setIs
                       type="text"
                       name="inches"
                       id="inches"
-                      value={inches}
+                      value={inch}
                       onChange={(e) => setInch(e.target.value)}
                       className="h-[50px] p-2 mb-0"
                       placeholder="Height(inches)"
