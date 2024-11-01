@@ -59,19 +59,20 @@ const clearTempPassword = () => {
 };
     
     const refreshAuthToken = async () => {
-        if (authTokens) {
+        if (authTokens?.refresh) {
             try {
                 const response = await axios.post(`${API_BASE_URL}/token/refresh/`, {
                     refresh: authTokens.refresh,
+                    
                 });
-                setAuthTokens((prevTokens) => ({
-                    ...prevTokens,
+                const updatedTokens = {
                     access: response.data.access,
-                }));
-                localStorage.setItem(
-                    'authTokens',
-                    JSON.stringify({ ...authTokens, access: response.data.access })
-                );
+                    refresh: response.data.refresh,  // Store the new refresh token as well
+                };
+                setAuthTokens(updatedTokens);
+                // console.log("Updated Tokens:", updatedTokens);  // Check updated tokens
+                localStorage.setItem('authTokens', JSON.stringify(updatedTokens));
+                return updatedTokens.access;
             } catch (error) {
                 console.error('Token refresh failed:', error);
                 logoutUser();
